@@ -10,7 +10,7 @@ import (
 
 const (
 	width    = 60
-	height   = 60
+	height   = 20
 	lifespan = 100
 	duration = 100
 	clear    = "\033[2J"
@@ -34,8 +34,8 @@ func main() {
 func initialize() {
 	fmt.Print(clear)
 	rand.Seed(time.Now().UnixNano())
-	for y := 0; y < height+1; y++ {
-		for x := 0; x < width+1; x++ {
+	for y := 1; y < height+1; y++ {
+		for x := 1; x < width+1; x++ {
 			cs[x][y] = rand.Intn(2)
 		}
 	}
@@ -47,7 +47,7 @@ func render() {
 		for x := 0; x < width+2; x++ {
 			c := " "
 			if cs[x][y] == 1 {
-				c = "■"
+				c = "▉"
 			}
 			screen += c
 		}
@@ -58,8 +58,8 @@ func render() {
 }
 
 func update() {
-	for y := 0; y < height+1; y++ {
-		for x := 0; x < width+1; x++ {
+	for y := 1; y < height+1; y++ {
+		for x := 1; x < width+1; x++ {
 			ncs[x][y] = 0
 			cnt := cs[x-1][y-1] + cs[x][y-1] + cs[x+1][y-1] + cs[x-1][y] + cs[x+1][y] + cs[x-1][y+1] + cs[x][y+1] + cs[x+1][y+1]
 			if cnt == 2 && cs[x][y] == 1 || cnt == 3 {
@@ -71,7 +71,7 @@ func update() {
 }
 
 func end() {
-	fmt.Print("Press any key to end.")
+	fmt.Print("Press any key to end. ")
 	bufio.NewScanner(os.Stdin).Scan()
 	fmt.Print(clear)
 	fmt.Print(head)
